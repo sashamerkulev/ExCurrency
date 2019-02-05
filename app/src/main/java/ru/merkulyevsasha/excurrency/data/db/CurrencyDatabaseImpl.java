@@ -1,4 +1,4 @@
-package ru.merkulyevsasha.excurrency.data;
+package ru.merkulyevsasha.excurrency.data.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import ru.merkulyevsasha.excurrency.domain.Currency;
 
-public class CurrencyDatabase extends SQLiteOpenHelper {
+public class CurrencyDatabaseImpl extends SQLiteOpenHelper implements CurrencyDatabase {
 
     private static final String DATABASE_NAME = "currencies.db";
     private static final int VERSION = 1;
@@ -34,7 +34,7 @@ public class CurrencyDatabase extends SQLiteOpenHelper {
     private static final String CREATE_CURRENCY_INDEX = "create unique index " + CURRENCY_TABLE_NAME + "_" + CURRENCY_NUM_CODE +
         " ON " + CURRENCY_TABLE_NAME + "(" + CURRENCY_NUM_CODE + ");";
 
-    public CurrencyDatabase(Context context) {
+    public CurrencyDatabaseImpl(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
 
@@ -65,6 +65,7 @@ public class CurrencyDatabase extends SQLiteOpenHelper {
     }
 
     @Nullable
+    @Override
     public Currency getCurrencyByNumCode(@NonNull String numCode) {
         final String select = "select " + CURRENCY_NUM_CODE + ", " +
             CURRENCY_CHR_CODE + ", " + CURRENCY_NOMINAL + ", " + CURRENCY_NAME + ", " + CURRENCY_VALUE +
@@ -79,12 +80,14 @@ public class CurrencyDatabase extends SQLiteOpenHelper {
         return null;
     }
 
+    @Override
     public void deleteCurrencies() {
         final String delete = "delete from " + CURRENCY_TABLE_NAME;
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(delete);
     }
 
+    @Override
     public void addCurrencies(@NonNull List<Currency> currencies) {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
@@ -105,6 +108,7 @@ public class CurrencyDatabase extends SQLiteOpenHelper {
     }
 
     @NonNull
+    @Override
     public List<Currency> getCurrencies() {
         final String select = "select " + CURRENCY_NUM_CODE + ", " +
             CURRENCY_CHR_CODE + ", " + CURRENCY_NOMINAL + ", " + CURRENCY_NAME + ", " + CURRENCY_VALUE +

@@ -1,4 +1,4 @@
-package ru.merkulyevsasha.excurrency.data;
+package ru.merkulyevsasha.excurrency.data.db;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -26,7 +26,7 @@ public class CurrencyDatabaseTest {
     @Before
     public void setUp() {
         Context appContext = InstrumentationRegistry.getTargetContext();
-        db = new CurrencyDatabase(appContext);
+        db = new CurrencyDatabaseImpl(appContext);
         db.deleteCurrencies();
     }
 
