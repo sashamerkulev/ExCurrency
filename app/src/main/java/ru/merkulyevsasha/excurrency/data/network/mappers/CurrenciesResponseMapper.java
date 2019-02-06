@@ -3,7 +3,7 @@ package ru.merkulyevsasha.excurrency.data.network.mappers;
 import java.util.ArrayList;
 import java.util.List;
 import ru.merkulyevsasha.excurrency.data.network.models.CurrencyResponse;
-import ru.merkulyevsasha.excurrency.domain.Currency;
+import ru.merkulyevsasha.excurrency.domain.models.Currency;
 
 public class CurrenciesResponseMapper implements Mapper<List<CurrencyResponse>, List<Currency>> {
 

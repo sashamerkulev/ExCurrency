@@ -1,4 +1,4 @@
-package ru.merkulyevsasha.excurrency.domain;
+package ru.merkulyevsasha.excurrency.domain.models;
 
 public class Currency {
 

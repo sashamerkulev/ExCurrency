@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import ru.merkulyevsasha.excurrency.domain.Currency;
+import ru.merkulyevsasha.excurrency.domain.models.Currency;
 
 @RunWith(AndroidJUnit4.class)
 public class CurrencyDatabaseTest {

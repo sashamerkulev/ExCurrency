@@ -1,8 +1,8 @@
-package ru.merkulyevsasha.excurrency.data;
+package ru.merkulyevsasha.excurrency.domain;
 
 import android.support.annotation.NonNull;
 import java.util.List;
-import ru.merkulyevsasha.excurrency.domain.Currency;
+import ru.merkulyevsasha.excurrency.domain.models.Currency;
 
 public interface CurrencyRepository {
     Currency getCurrencyByNumCode(@NonNull String numCode);
