@@ -4,4 +4,7 @@
     <string name="currency_select_title">Выберите валюту</string>
     <string name="validate_error_message">Ошибка валидации введенного значения.</string>
     <string name="calculate_currency_button_title">Расчитать</string>
+    <string name="currency_value_label">Сумма</string>
+    <string name="currency_label">Валюта</string>
+    <string name="currency_to_label">Валюта (куда)</string>
 </resources>
