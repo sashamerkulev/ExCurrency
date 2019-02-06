@@ -17,6 +17,11 @@ public class MainActivity extends AppCompatActivity implements MainView, Currenc
     private final static String CURRENCY_TYPE_FROM = "CURRENCY_TYPE_FROM";
     private final static String CURRENCY_TYPE_TO = "CURRENCY_TYPE_TO";
 
+    private final static String KEY_CURRENCY_VALUE = "KEY_CURRENCY_VALUE";
+    private final static String KEY_CURRENCY_FROM = "KEY_CURRENCY_FROM";
+    private final static String KEY_CURRENCY_TO = "KEY_CURRENCY_TO";
+    private final static String KEY_CURRENCY_RESULT = "KEY_CURRENCY_RESULT";
+
     private MainPresenter pres;
 
     private EditText value;
@@ -33,37 +38,11 @@ public class MainActivity extends AppCompatActivity implements MainView, Currenc
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initControls();
+        initControls(savedInstanceState);
 
         pres = new MainPresenter(((CurrencyApp) getApplication()).getCurrencyFactory().getCurrencyInteractor());
         pres.attachView(this);
         pres.onCreate();
-    }
-
-    private void initControls() {
-        value = findViewById(R.id.value);
-        fromCurrency = findViewById(R.id.from);
-        toCurrency = findViewById(R.id.to);
-        calculate = findViewById(R.id.calculate);
-        progressBar = findViewById(R.id.progressbar);
-        resultTextView = findViewById(R.id.result);
-        calculate.setOnClickListener(v -> {
-            try {
-                double result = Double.parseDouble(value.getText().toString().replace(",", "."));
-                pres.calculate(result, fromCurrency.getText().toString(), toCurrency.getText().toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-                showValidateErrorMessage();
-            }
-        });
-        fromCurrency.setOnClickListener(v -> {
-            CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(CURRENCY_TYPE_FROM, getCurrencyCodes(currencies));
-            dialog.show(getSupportFragmentManager(), CURRENCY_TYPE_FROM);
-        });
-        toCurrency.setOnClickListener(v -> {
-            CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(CURRENCY_TYPE_TO, getCurrencyCodes(currencies));
-            dialog.show(getSupportFragmentManager(), CURRENCY_TYPE_TO);
-        });
     }
 
     @Override
@@ -108,6 +87,56 @@ public class MainActivity extends AppCompatActivity implements MainView, Currenc
         this.currencies.addAll(currencies);
     }
 
+    @Override
+    public void onCurrencyClicked(String typeCurrency, String currency) {
+        if (typeCurrency.equals(CURRENCY_TYPE_FROM)) {
+            fromCurrency.setText(currency);
+        } else if (typeCurrency.equals(CURRENCY_TYPE_TO)) {
+            toCurrency.setText(currency);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_CURRENCY_VALUE, value.getText().toString());
+        outState.putString(KEY_CURRENCY_FROM, fromCurrency.getText().toString());
+        outState.putString(KEY_CURRENCY_TO, toCurrency.getText().toString());
+        outState.putString(KEY_CURRENCY_RESULT, resultTextView.getText().toString());
+    }
+
+    private void initControls(Bundle savedInstanceState) {
+        value = findViewById(R.id.value);
+        fromCurrency = findViewById(R.id.from);
+        toCurrency = findViewById(R.id.to);
+        calculate = findViewById(R.id.calculate);
+        progressBar = findViewById(R.id.progressbar);
+        resultTextView = findViewById(R.id.result);
+        if (savedInstanceState != null) {
+            value.setText(savedInstanceState.getString(KEY_CURRENCY_VALUE));
+            fromCurrency.setText(savedInstanceState.getString(KEY_CURRENCY_FROM));
+            toCurrency.setText(savedInstanceState.getString(KEY_CURRENCY_TO));
+            resultTextView.setText(savedInstanceState.getString(KEY_CURRENCY_RESULT));
+        }
+        calculate.setOnClickListener(v -> {
+            try {
+                double result = Double.parseDouble(value.getText().toString().replace(",", "."));
+                pres.calculate(result, fromCurrency.getText().toString(), toCurrency.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+                showValidateErrorMessage();
+            }
+        });
+        fromCurrency.setOnClickListener(v -> {
+            CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(CURRENCY_TYPE_FROM, getCurrencyCodes(currencies));
+            dialog.show(getSupportFragmentManager(), CURRENCY_TYPE_FROM);
+        });
+        toCurrency.setOnClickListener(v -> {
+            CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(CURRENCY_TYPE_TO, getCurrencyCodes(currencies));
+            dialog.show(getSupportFragmentManager(), CURRENCY_TYPE_TO);
+        });
+    }
+
     private void showValidateErrorMessage() {
         Toast.makeText(MainActivity.this, getString(R.string.validate_error_message), Toast.LENGTH_LONG).show();
     }
@@ -118,14 +147,5 @@ public class MainActivity extends AppCompatActivity implements MainView, Currenc
             codes.add(currency.getChrCode() + " - " + currency.getName());
         }
         return codes;
-    }
-
-    @Override
-    public void onCurrencyClicked(String typeCurrency, String currency) {
-        if (typeCurrency.equals(CURRENCY_TYPE_FROM)) {
-            fromCurrency.setText(currency);
-        } else if (typeCurrency.equals(CURRENCY_TYPE_TO)) {
-            toCurrency.setText(currency);
-        }
     }
 }

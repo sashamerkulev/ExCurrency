@@ -114,7 +114,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/value"
         tools:visibility="visible"
-        />
+        android:indeterminateTint="@color/colorAccent"/>
 
     <TextView
         android:id="@+id/result"
