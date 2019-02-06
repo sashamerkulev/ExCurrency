@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ExCurrency</string>
+    <string name="convert_error_message">Не удачная попытка конвертации валюты! Повторите позже!</string>
+    <string name="currency_select_title">Выберите валюту</string>
+    <string name="validate_error_message">Ошибка валидации введенного значения.</string>
+    <string name="calculate_currency_button_title">Расчитать</string>
 </resources>
