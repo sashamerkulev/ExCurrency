@@ -70,7 +70,7 @@ public class CurrencyDatabaseImpl extends SQLiteOpenHelper implements CurrencyDa
         final String select = "select " + CURRENCY_NUM_CODE + ", " +
             CURRENCY_CHR_CODE + ", " + CURRENCY_NOMINAL + ", " + CURRENCY_NAME + ", " + CURRENCY_VALUE +
             " from " + CURRENCY_TABLE_NAME +
-            " where " + CURRENCY_NUM_CODE + " = ?";
+            " where " + CURRENCY_CHR_CODE + " = ?";
         SQLiteDatabase db = getReadableDatabase();
         try (Cursor cursor = db.rawQuery(select, new String[] { numCode })) {
             if (cursor.moveToFirst()) {

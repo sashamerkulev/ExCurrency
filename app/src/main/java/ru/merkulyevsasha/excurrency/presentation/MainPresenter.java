@@ -1,22 +1,58 @@
 package ru.merkulyevsasha.excurrency.presentation;
 
+import java.util.List;
+import ru.merkulyevsasha.excurrency.domain.ConvertCurrencyCallback;
 import ru.merkulyevsasha.excurrency.domain.CurrencyInteractor;
+import ru.merkulyevsasha.excurrency.domain.GetCurrenciesCalback;
+import ru.merkulyevsasha.excurrency.domain.models.Currency;
 
-public class MainPresenter {
+class MainPresenter {
 
     private final CurrencyInteractor interactor;
     private MainView view;
 
-    public MainPresenter(CurrencyInteractor interactor) {
+    MainPresenter(CurrencyInteractor interactor) {
         this.interactor = interactor;
     }
 
-    public void attachView(MainView view) {
+    void attachView(MainView view) {
         this.view = view;
     }
 
-    public void dettachView() {
+    void dettachView() {
         this.view = null;
     }
 
+    void calculate(double value, String from, String to) {
+        if (view == null) return;
+        view.showProgress();
+        interactor.convert(value, from, to, new ConvertCurrencyCallback() {
+            @Override
+            public void onSuccess(double result) {
+                if (view == null) return;
+                view.hideProgress();
+                view.showResult(result);
+            }
+
+            @Override
+            public void onFailure() {
+                if (view == null) return;
+                view.hideProgress();
+            }
+        });
+    }
+
+    void onCreate() {
+        interactor.getCurrency(new GetCurrenciesCalback() {
+            @Override
+            public void onSuccess(List<Currency> currencies) {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+    }
 }
