@@ -2,19 +2,19 @@ package ru.merkulyevsasha.excurrency.domain;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import ru.merkulyevsasha.excurrency.domain.calculator.CurrencyCalculator;
 import ru.merkulyevsasha.excurrency.domain.models.Currency;
+import ru.merkulyevsasha.excurrency.domain.usecase.CurrencyConverterUsecase;
 
 public class CurrencyInteractorImpl implements CurrencyInteractor {
 
-    private final CurrencyCalculator calculator;
+    private final CurrencyConverterUsecase currencyConverter;
     private final CurrencyRepository repo;
     private final ExecutorService executor;
 
-    public CurrencyInteractorImpl(ExecutorService executor, CurrencyRepository repo, CurrencyCalculator calculator) {
+    public CurrencyInteractorImpl(ExecutorService executor, CurrencyRepository repo, CurrencyConverterUsecase currencyConverter) {
         this.repo = repo;
         this.executor = executor;
-        this.calculator = calculator;
+        this.currencyConverter = currencyConverter;
     }
 
     @Override
@@ -23,19 +23,9 @@ public class CurrencyInteractorImpl implements CurrencyInteractor {
             @Override
             public void run() {
                 try {
-                    if (curFrom.equals("RUB") && curTo.equals("RUB")) callback.onFailure();
+                    Currency from = repo.getCurrencyByNumCode(curFrom);
                     Currency to = repo.getCurrencyByNumCode(curTo);
-                    if (curFrom.equals("RUB")) {
-                        callback.onSuccess(calculator.calculate(value, to.getNomianal(), to.getValue()));
-                    } else {
-                        Currency from = repo.getCurrencyByNumCode(curFrom);
-                        if (curTo.equals("RUB")) {
-                            callback.onSuccess(calculator.calculateToRubls(value, from.getNomianal(), from.getValue()));
-                        } else {
-                            callback.onSuccess(calculator.calculate(value, from.getNomianal(), from.getValue(),
-                                to.getNomianal(), to.getValue()));
-                        }
-                    }
+                    currencyConverter.convert(value, curFrom, curTo, from, to, callback);
                 } catch (Exception e) {
                     e.printStackTrace();
                     callback.onFailure();

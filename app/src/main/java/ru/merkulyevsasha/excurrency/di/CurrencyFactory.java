@@ -14,6 +14,7 @@ import ru.merkulyevsasha.excurrency.data.network.CurrencyNetworkImpl;
 import ru.merkulyevsasha.excurrency.domain.CurrencyInteractor;
 import ru.merkulyevsasha.excurrency.domain.CurrencyInteractorImpl;
 import ru.merkulyevsasha.excurrency.domain.calculator.CurrencyCalculatorImpl;
+import ru.merkulyevsasha.excurrency.domain.usecase.CurrencyConverterUsecaseImpl;
 
 public class CurrencyFactory {
 
@@ -28,7 +29,7 @@ public class CurrencyFactory {
         interactor = new CurrencyInteractorImpl(
             executorService,
             new CurrencyRepositoryImpl(database, network),
-            new CurrencyCalculatorImpl()
+            new CurrencyConverterUsecaseImpl(new CurrencyCalculatorImpl())
         );
     }
 
