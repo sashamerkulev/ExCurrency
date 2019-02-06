@@ -1,7 +1,6 @@
 package ru.merkulyevsasha.excurrency.presentation;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,12 +29,9 @@ public class CurrenciesFragmentDialog extends DialogFragment {
         ListAdapter adapter = new ArrayAdapter<>(requireContext(), R.layout.item_dialog, currencies);
         return new AlertDialog.Builder(requireActivity())
             .setTitle(R.string.currency_select_title)
-            .setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    clickListener.onCurrencyClicked(currencies.get(which).substring(0, 3));
-                }
+            .setSingleChoiceItems(adapter, 0, (dialog, which) -> {
+                dialog.dismiss();
+                clickListener.onCurrencyClicked(currencies.get(which).substring(0, 3));
             })
             .create();
     }

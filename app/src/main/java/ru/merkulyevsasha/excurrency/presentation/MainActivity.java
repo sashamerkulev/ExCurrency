@@ -12,7 +12,7 @@ import ru.merkulyevsasha.excurrency.CurrencyApp;
 import ru.merkulyevsasha.excurrency.R;
 import ru.merkulyevsasha.excurrency.domain.models.Currency;
 
-public class MainActivity extends AppCompatActivity implements MainView{
+public class MainActivity extends AppCompatActivity implements MainView {
 
     private MainPresenter pres;
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
         initControls();
 
-        pres = new MainPresenter(((CurrencyApp)getApplication()).getCurrencyFactory().getCurrencyInteractor());
+        pres = new MainPresenter(((CurrencyApp) getApplication()).getCurrencyFactory().getCurrencyInteractor());
         pres.attachView(this);
         pres.onCreate();
     }
@@ -44,41 +44,24 @@ public class MainActivity extends AppCompatActivity implements MainView{
         calculate = findViewById(R.id.calculate);
         progressBar = findViewById(R.id.progressbar);
         resultTextView = findViewById(R.id.result);
-        calculate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    double result = Double.parseDouble(value.getText().toString().replace(",","."));
-                    pres.calculate(result, fromCurrency.getText().toString(), toCurrency.getText().toString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    showValidateErrorMessage();
-                }
+        calculate.setOnClickListener(v -> {
+            try {
+                double result = Double.parseDouble(value.getText().toString().replace(",", "."));
+                pres.calculate(result, fromCurrency.getText().toString(), toCurrency.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+                showValidateErrorMessage();
             }
         });
-        fromCurrency.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(getCurrencyCodes(currencies), new CurrenciesFragmentDialog.OnCurrencyClick() {
-                    @Override
-                    public void onCurrencyClicked(String currency) {
-                        fromCurrency.setText(currency);
-                    }
-                });
-                dialog.show(getSupportFragmentManager(), "d1");
-            }
+        fromCurrency.setOnClickListener(v -> {
+            CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(getCurrencyCodes(currencies),
+                currency -> fromCurrency.setText(currency));
+            dialog.show(getSupportFragmentManager(), "d1");
         });
-        toCurrency.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(getCurrencyCodes(currencies), new CurrenciesFragmentDialog.OnCurrencyClick() {
-                    @Override
-                    public void onCurrencyClicked(String currency) {
-                        toCurrency.setText(currency);
-                    }
-                });
-                dialog.show(getSupportFragmentManager(), "d2");
-            }
+        toCurrency.setOnClickListener(v -> {
+            CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(getCurrencyCodes(currencies),
+                currency -> toCurrency.setText(currency));
+            dialog.show(getSupportFragmentManager(), "d2");
         });
     }
 
@@ -91,44 +74,30 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     @Override
     public void showProgress() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.VISIBLE);
-                calculate.setVisibility(View.GONE);
-            }
+        runOnUiThread(() -> {
+            progressBar.setVisibility(View.VISIBLE);
+            calculate.setVisibility(View.GONE);
         });
     }
 
     @Override
     public void hideProgress() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressBar.setVisibility(View.GONE);
-                calculate.setVisibility(View.VISIBLE);
-            }
+        runOnUiThread(() -> {
+            progressBar.setVisibility(View.GONE);
+            calculate.setVisibility(View.VISIBLE);
         });
     }
 
     @Override
     public void showResult(final double result) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                resultTextView.setText(String.valueOf(result));
-            }
-        });
+        runOnUiThread(() -> resultTextView.setText(String.valueOf(result)));
     }
 
     @Override
     public void showErrorMessage() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                resultTextView.setText("");
-                Toast.makeText(MainActivity.this, getString(R.string.convert_error_message), Toast.LENGTH_LONG).show();
-            }
+        runOnUiThread(() -> {
+            resultTextView.setText("");
+            Toast.makeText(MainActivity.this, getString(R.string.convert_error_message), Toast.LENGTH_LONG).show();
         });
     }
 
@@ -144,10 +113,9 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     private List<String> getCurrencyCodes(List<Currency> currencies) {
         List<String> codes = new ArrayList<>();
-        for(Currency currency: currencies) {
-            codes.add(currency.getChrCode()+" - " + currency.getName());
+        for (Currency currency : currencies) {
+            codes.add(currency.getChrCode() + " - " + currency.getName());
         }
         return codes;
     }
-
 }

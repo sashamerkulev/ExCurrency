@@ -19,33 +19,27 @@ public class CurrencyInteractorImpl implements CurrencyInteractor {
 
     @Override
     public void convert(final double value, final String curFrom, final String curTo, final ConvertCurrencyCallback callback) {
-        executor.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Currency from = repo.getCurrencyByNumCode(curFrom);
-                    Currency to = repo.getCurrencyByNumCode(curTo);
-                    currencyConverter.convert(value, curFrom, curTo, from, to, callback);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    callback.onFailure();
-                }
+        executor.submit(() -> {
+            try {
+                Currency from = repo.getCurrencyByNumCode(curFrom);
+                Currency to = repo.getCurrencyByNumCode(curTo);
+                currencyConverter.convert(value, curFrom, curTo, from, to, callback);
+            } catch (Exception e) {
+                e.printStackTrace();
+                callback.onFailure();
             }
         });
     }
 
     @Override
     public void getCurrency(final GetCurrenciesCalback callback) {
-        executor.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    List<Currency> result = repo.getCurrencies();
-                    callback.onSuccess(result);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    callback.onFailure();
-                }
+        executor.submit(() -> {
+            try {
+                List<Currency> result = repo.getCurrencies();
+                callback.onSuccess(result);
+            } catch (Exception e) {
+                e.printStackTrace();
+                callback.onFailure();
             }
         });
     }

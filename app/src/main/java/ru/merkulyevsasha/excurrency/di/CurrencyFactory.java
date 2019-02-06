@@ -18,14 +18,12 @@ import ru.merkulyevsasha.excurrency.domain.usecase.CurrencyConverterUsecaseImpl;
 
 public class CurrencyFactory {
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-    private final CurrencyDatabase database;
-    private final CurrencyNetwork network;
     private final CurrencyInteractor interactor;
 
     public CurrencyFactory(Context context) {
-        database = new CurrencyDatabaseImpl(context);
-        network = new CurrencyNetworkImpl(new CurrencyHttpClient(BuildConfig.CURRENCY_URL), new CurrencyConverter());
+        CurrencyDatabase database = new CurrencyDatabaseImpl(context);
+        CurrencyNetwork network = new CurrencyNetworkImpl(new CurrencyHttpClient(BuildConfig.CURRENCY_URL), new CurrencyConverter());
+        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         interactor = new CurrencyInteractorImpl(
             executorService,
             new CurrencyRepositoryImpl(database, network),

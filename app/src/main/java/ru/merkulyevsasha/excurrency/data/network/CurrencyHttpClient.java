@@ -14,7 +14,7 @@ public class CurrencyHttpClient {
         this.currencyUrl = url;
     }
 
-    public String getRawData() throws IOException {
+    String getRawData() throws IOException {
         URL url = new URL(currencyUrl);
 
         URLConnection connection = url.openConnection();
@@ -22,7 +22,7 @@ public class CurrencyHttpClient {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "windows-1251"));
         StringBuilder buf = new StringBuilder();
-        String line = null;
+        String line;
         while ((line = reader.readLine()) != null) {
             buf.append(line).append("\n");
         }

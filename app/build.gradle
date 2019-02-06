@@ -24,6 +24,10 @@ android {
             buildConfigField "String", "CURRENCY_URL", "\"http://www.cbr.ru/scripts/XML_daily.asp\""
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
