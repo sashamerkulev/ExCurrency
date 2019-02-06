@@ -12,7 +12,10 @@ import ru.merkulyevsasha.excurrency.CurrencyApp;
 import ru.merkulyevsasha.excurrency.R;
 import ru.merkulyevsasha.excurrency.domain.models.Currency;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity implements MainView, CurrenciesFragmentDialog.OnCurrencyClick {
+
+    private final static String CURRENCY_TYPE_FROM = "CURRENCY_TYPE_FROM";
+    private final static String CURRENCY_TYPE_TO = "CURRENCY_TYPE_TO";
 
     private MainPresenter pres;
 
@@ -54,14 +57,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
             }
         });
         fromCurrency.setOnClickListener(v -> {
-            CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(getCurrencyCodes(currencies),
-                currency -> fromCurrency.setText(currency));
-            dialog.show(getSupportFragmentManager(), "d1");
+            CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(CURRENCY_TYPE_FROM, getCurrencyCodes(currencies));
+            dialog.show(getSupportFragmentManager(), CURRENCY_TYPE_FROM);
         });
         toCurrency.setOnClickListener(v -> {
-            CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(getCurrencyCodes(currencies),
-                currency -> toCurrency.setText(currency));
-            dialog.show(getSupportFragmentManager(), "d2");
+            CurrenciesFragmentDialog dialog = CurrenciesFragmentDialog.getInstance(CURRENCY_TYPE_TO, getCurrencyCodes(currencies));
+            dialog.show(getSupportFragmentManager(), CURRENCY_TYPE_TO);
         });
     }
 
@@ -117,5 +118,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
             codes.add(currency.getChrCode() + " - " + currency.getName());
         }
         return codes;
+    }
+
+    @Override
+    public void onCurrencyClicked(String typeCurrency, String currency) {
+        if (typeCurrency.equals(CURRENCY_TYPE_FROM)) {
+            fromCurrency.setText(currency);
+        } else if (typeCurrency.equals(CURRENCY_TYPE_TO)) {
+            toCurrency.setText(currency);
+        }
     }
 }
