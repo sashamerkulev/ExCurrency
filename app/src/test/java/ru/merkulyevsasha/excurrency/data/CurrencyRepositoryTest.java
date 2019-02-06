@@ -1,11 +1,17 @@
 package ru.merkulyevsasha.excurrency.data;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
 import ru.merkulyevsasha.excurrency.data.db.CurrencyDatabase;
+import ru.merkulyevsasha.excurrency.data.network.CurrencyNetwork;
+import ru.merkulyevsasha.excurrency.data.network.models.CurrencyResponse;
 import ru.merkulyevsasha.excurrency.domain.Currency;
 
 @RunWith(JUnit4.class)
@@ -18,7 +24,20 @@ public class CurrencyRepositoryTest {
     private final static double TEST_VALUE = 13.6;
 
     private final CurrencyDatabase database = Mockito.mock(CurrencyDatabase.class);
-    private final CurrencyRepository repo = new CurrencyRepositoryImpl(database);
+    private final CurrencyNetwork network = Mockito.mock(CurrencyNetwork.class);
+    private final CurrencyRepository repo = new CurrencyRepositoryImpl(database, network);
+
+    private final List<CurrencyResponse> currencyResponses = new ArrayList<>();
+
+    @Before
+    public void initialTestData() {
+        currencyResponses.add(getTestCurrencyResponse());
+    }
+
+    @After
+    public void noMoreInteractions(){
+        Mockito.verifyNoMoreInteractions(database, network);
+    }
 
     @Test
     public void getCurrencyByNumCode() {
@@ -30,11 +49,35 @@ public class CurrencyRepositoryTest {
     }
 
     @Test
-    public void getCurrencies() {
+    public void getCurrencies_when_network_return_empty() throws IOException {
         Mockito.when(database.getCurrencies()).thenReturn(new ArrayList<Currency>());
+        Mockito.when(network.getCurrencies()).thenReturn(new ArrayList<CurrencyResponse>());
 
         repo.getCurrencies();
 
+        Mockito.verify(network).getCurrencies();
         Mockito.verify(database).getCurrencies();
     }
+
+    @Test
+    public void getCurrencies_when_network_return_given_data() throws IOException {
+        Mockito.when(database.getCurrencies()).thenReturn(new ArrayList<Currency>());
+        Mockito.when(network.getCurrencies()).thenReturn(currencyResponses);
+
+        repo.getCurrencies();
+
+        Mockito.verify(network).getCurrencies();
+        Mockito.verify(database).addCurrencies(Mockito.<Currency>anyList()); // TODO matcher
+    }
+
+    private CurrencyResponse getTestCurrencyResponse() {
+        CurrencyResponse response = new CurrencyResponse();
+        response.chrCode = TEST_CHR;
+        response.numCode = TEST_NUM;
+        response.name = TEST_NAME;
+        response.nomianal = TEST_NOMINAL;
+        response.value = String.valueOf(TEST_VALUE);
+        return response;
+    }
+
 }
