@@ -10,6 +10,11 @@ public class CurrencyCalculatorImpl implements CurrencyCalculator {
     }
 
     @Override
+    public double calculateToRubls(double originalValue, int nominal, double exchangeValue) {
+        return round(originalValue * exchangeValue / nominal, 4);
+    }
+
+    @Override
     public double calculate(double originalValue, int nominal1, double exchangeValue1, int nominal2, double exchangeValue2) {
         double result = originalValue * exchangeValue1 / nominal1;
         return round(calculate(result, nominal2, exchangeValue2), 4);

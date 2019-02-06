@@ -23,13 +23,18 @@ public class CurrencyInteractorImpl implements CurrencyInteractor {
             @Override
             public void run() {
                 try {
+                    if (curFrom.equals("RUB") && curTo.equals("RUB")) callback.onFailure();
                     Currency to = repo.getCurrencyByNumCode(curTo);
                     if (curFrom.equals("RUB")) {
                         callback.onSuccess(calculator.calculate(value, to.getNomianal(), to.getValue()));
                     } else {
                         Currency from = repo.getCurrencyByNumCode(curFrom);
-                        callback.onSuccess(calculator.calculate(value, from.getNomianal(), from.getValue(),
-                            to.getNomianal(), to.getValue()));
+                        if (curTo.equals("RUB")) {
+                            callback.onSuccess(calculator.calculateToRubls(value, from.getNomianal(), from.getValue()));
+                        } else {
+                            callback.onSuccess(calculator.calculate(value, from.getNomianal(), from.getValue(),
+                                to.getNomianal(), to.getValue()));
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
