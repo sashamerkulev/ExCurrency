@@ -38,6 +38,7 @@ class MainPresenter {
             public void onFailure() {
                 if (view == null) return;
                 view.hideProgress();
+                view.showErrorMessage();
             }
         });
     }
@@ -46,12 +47,13 @@ class MainPresenter {
         interactor.getCurrency(new GetCurrenciesCalback() {
             @Override
             public void onSuccess(List<Currency> currencies) {
-
+                if (view == null) return;
+                currencies.add(0, new Currency("RUB", "RUB", 1, "Россйский рубль", 1));
+                view.storeCurrencies(currencies);
             }
 
             @Override
             public void onFailure() {
-
             }
         });
     }
