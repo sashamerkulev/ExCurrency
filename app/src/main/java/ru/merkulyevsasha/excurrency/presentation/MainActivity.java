@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
     private List<String> getCurrencyCodes(List<Currency> currencies) {
         List<String> codes = new ArrayList<>();
         for(Currency currency: currencies) {
-            codes.add(currency.getChrCode());
+            codes.add(currency.getChrCode()+" - " + currency.getName());
         }
         return codes;
     }

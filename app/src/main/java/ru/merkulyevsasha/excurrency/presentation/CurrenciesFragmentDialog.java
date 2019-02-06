@@ -34,7 +34,7 @@ public class CurrenciesFragmentDialog extends DialogFragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
-                    clickListener.onCurrencyClicked(currencies.get(which));
+                    clickListener.onCurrencyClicked(currencies.get(which).substring(0, 3));
                 }
             })
             .create();
