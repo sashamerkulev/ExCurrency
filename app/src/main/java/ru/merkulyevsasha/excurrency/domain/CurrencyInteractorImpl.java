@@ -36,7 +36,6 @@ public class CurrencyInteractorImpl implements CurrencyInteractor {
 
     @Override
     public void getCurrency(final GetCurrenciesCalback callback) {
-
         executor.submit(new Runnable() {
             @Override
             public void run() {
