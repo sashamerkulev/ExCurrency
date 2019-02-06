@@ -19,7 +19,7 @@ class MainPresenter {
         this.view = view;
     }
 
-    void dettachView() {
+    void detachView() {
         this.view = null;
     }
 
@@ -48,7 +48,7 @@ class MainPresenter {
             @Override
             public void onSuccess(List<Currency> currencies) {
                 if (view == null) return;
-                currencies.add(0, new Currency("RUB", "RUB", 1, "Россйский рубль", 1));
+                currencies.add(0, new Currency("RUB", "RUB", 1, "Российский рубль", 1));
                 view.storeCurrencies(currencies);
             }
 

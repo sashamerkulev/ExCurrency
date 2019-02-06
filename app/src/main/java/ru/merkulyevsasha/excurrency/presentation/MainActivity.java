@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     @Override
     protected void onDestroy() {
-        pres.dettachView();
+        pres.detachView();
         pres = null;
         super.onDestroy();
     }
