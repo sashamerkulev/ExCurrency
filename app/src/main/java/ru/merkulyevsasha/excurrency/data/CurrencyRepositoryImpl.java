@@ -32,6 +32,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
             List<CurrencyResponse> currenciesResponse = network.getCurrencies();
             if (currenciesResponse.size() > 0) {
                 List<Currency> currencies = mapper.map(currenciesResponse);
+                database.deleteCurrencies();
                 database.addCurrencies(currencies);
                 return currencies;
             }
