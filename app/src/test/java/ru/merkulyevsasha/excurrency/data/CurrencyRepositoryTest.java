@@ -12,7 +12,8 @@ import org.mockito.Mockito;
 import ru.merkulyevsasha.excurrency.data.db.CurrencyDatabase;
 import ru.merkulyevsasha.excurrency.data.network.CurrencyNetwork;
 import ru.merkulyevsasha.excurrency.data.network.models.CurrencyResponse;
-import ru.merkulyevsasha.excurrency.domain.Currency;
+import ru.merkulyevsasha.excurrency.domain.CurrencyRepository;
+import ru.merkulyevsasha.excurrency.domain.models.Currency;
 
 @RunWith(JUnit4.class)
 public class CurrencyRepositoryTest {

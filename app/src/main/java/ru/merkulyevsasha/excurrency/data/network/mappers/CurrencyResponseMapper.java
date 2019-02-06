@@ -1,7 +1,7 @@
 package ru.merkulyevsasha.excurrency.data.network.mappers;
 
 import ru.merkulyevsasha.excurrency.data.network.models.CurrencyResponse;
-import ru.merkulyevsasha.excurrency.domain.Currency;
+import ru.merkulyevsasha.excurrency.domain.models.Currency;
 
 public class CurrencyResponseMapper implements Mapper<CurrencyResponse, Currency> {
     @Override

@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import ru.merkulyevsasha.excurrency.domain.Currency;
+import ru.merkulyevsasha.excurrency.domain.models.Currency;
 
 public class CurrencyDatabaseImpl extends SQLiteOpenHelper implements CurrencyDatabase {
 
