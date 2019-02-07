@@ -8,9 +8,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
+import ru.merkulyevsasha.core.models.Currency;
 import ru.merkulyevsasha.excurrency.CurrencyApp;
 import ru.merkulyevsasha.excurrency.R;
-import ru.merkulyevsasha.excurrency.domain.models.Currency;
 
 public class MainActivity extends AppCompatActivity implements MainView, CurrenciesFragmentDialog.OnCurrencyClick {
 

@@ -1,7 +1,7 @@
 package ru.merkulyevsasha.excurrency;
 
 import android.app.Application;
-import ru.merkulyevsasha.excurrency.di.CurrencyFactory;
+import ru.merkulyevsasha.factories.CurrencyFactory;
 
 public class CurrencyApp extends Application {
 

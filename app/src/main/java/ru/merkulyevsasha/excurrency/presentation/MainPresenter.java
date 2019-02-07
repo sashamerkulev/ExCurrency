@@ -1,10 +1,10 @@
 package ru.merkulyevsasha.excurrency.presentation;
 
 import java.util.List;
-import ru.merkulyevsasha.excurrency.domain.ConvertCurrencyCallback;
-import ru.merkulyevsasha.excurrency.domain.CurrencyInteractor;
-import ru.merkulyevsasha.excurrency.domain.GetCurrenciesCalback;
-import ru.merkulyevsasha.excurrency.domain.models.Currency;
+import ru.merkulyevsasha.core.models.Currency;
+import ru.merkulyevsasha.interactors.ConvertCurrencyCallback;
+import ru.merkulyevsasha.interactors.CurrencyInteractor;
+import ru.merkulyevsasha.interactors.GetCurrenciesCalback;
 
 class MainPresenter {
 

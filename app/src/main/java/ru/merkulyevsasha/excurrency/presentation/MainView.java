@@ -1,7 +1,7 @@
 package ru.merkulyevsasha.excurrency.presentation;
 
 import java.util.List;
-import ru.merkulyevsasha.excurrency.domain.models.Currency;
+import ru.merkulyevsasha.core.models.Currency;
 
 public interface MainView {
     void showProgress();
