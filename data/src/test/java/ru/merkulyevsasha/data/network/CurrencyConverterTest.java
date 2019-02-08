@@ -1,11 +1,11 @@
-package ru.merkulyevsasha.excurrency.data.network;
+package ru.merkulyevsasha.data.network;
 
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import ru.merkulyevsasha.excurrency.data.network.models.CurrencyResponse;
+import ru.merkulyevsasha.data.network.models.CurrencyResponse;
 
 @RunWith(JUnit4.class)
 public class CurrencyConverterTest {

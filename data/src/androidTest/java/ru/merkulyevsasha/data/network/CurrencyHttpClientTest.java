@@ -1,4 +1,4 @@
-package ru.merkulyevsasha.excurrency.data.network;
+package ru.merkulyevsasha.data.network;
 
 import android.support.test.runner.AndroidJUnit4;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package ru.merkulyevsasha.excurrency.data.db;
+package ru.merkulyevsasha.data.db;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import ru.merkulyevsasha.excurrency.domain.models.Currency;
+import ru.merkulyevsasha.core.models.Currency;
 
 @RunWith(AndroidJUnit4.class)
 public class CurrencyDatabaseTest {
@@ -39,7 +39,7 @@ public class CurrencyDatabaseTest {
     public void getCurrencyByNumCode_returns_given_data_if_it_exists() {
         addTestCurrencies();
 
-        Currency resultCurrency = db.getCurrencyByNumCode(TEST_NUM);
+        Currency resultCurrency = db.getCurrencyByNumCode(TEST_CHR);
 
         Assert.assertEquals(TEST_NUM, resultCurrency.getNumCode());
         Assert.assertEquals(TEST_CHR, resultCurrency.getChrCode());

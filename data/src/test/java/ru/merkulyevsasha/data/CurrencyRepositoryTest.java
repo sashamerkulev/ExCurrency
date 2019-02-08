@@ -1,4 +1,4 @@
-package ru.merkulyevsasha.excurrency.data;
+package ru.merkulyevsasha.data;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,11 +9,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
-import ru.merkulyevsasha.excurrency.data.db.CurrencyDatabase;
-import ru.merkulyevsasha.excurrency.data.network.CurrencyNetwork;
-import ru.merkulyevsasha.excurrency.data.network.models.CurrencyResponse;
-import ru.merkulyevsasha.excurrency.domain.CurrencyRepository;
-import ru.merkulyevsasha.excurrency.domain.models.Currency;
+import ru.merkulyevsasha.core.models.Currency;
+import ru.merkulyevsasha.data.db.CurrencyDatabase;
+import ru.merkulyevsasha.data.network.CurrencyNetwork;
+import ru.merkulyevsasha.data.network.models.CurrencyResponse;
+import ru.merkulyevsasha.repositories.CurrencyRepository;
 
 @RunWith(JUnit4.class)
 public class CurrencyRepositoryTest {

@@ -1,11 +1,11 @@
-package ru.merkulyevsasha.excurrency.data.network.mappers;
+package ru.merkulyevsasha.data.network.mappers;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import ru.merkulyevsasha.excurrency.data.network.models.CurrencyResponse;
-import ru.merkulyevsasha.excurrency.domain.models.Currency;
+import ru.merkulyevsasha.core.models.Currency;
+import ru.merkulyevsasha.data.network.models.CurrencyResponse;
 
 @RunWith(JUnit4.class)
 public class CurrencyResponseMapperTest {
