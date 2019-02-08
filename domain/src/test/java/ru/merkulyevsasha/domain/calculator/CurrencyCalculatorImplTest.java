@@ -1,4 +1,4 @@
-package ru.merkulyevsasha.excurrency.domain.calculator;
+package ru.merkulyevsasha.domain.calculator;
 
 import org.junit.Assert;
 import org.junit.Test;

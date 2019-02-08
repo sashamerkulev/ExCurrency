@@ -1,4 +1,4 @@
-package ru.merkulyevsasha.excurrency.domain.usecase;
+package ru.merkulyevsasha.domain.usecase;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
