@@ -62,12 +62,12 @@ public class CurrencyRepositoryTest {
 
     @Test
     public void getCurrencies_when_network_return_given_data() throws IOException {
-        Mockito.when(database.getCurrencies()).thenReturn(new ArrayList<Currency>());
         Mockito.when(network.getCurrencies()).thenReturn(currencyResponses);
 
         repo.getCurrencies();
 
         Mockito.verify(network).getCurrencies();
+        Mockito.verify(database).deleteCurrencies();
         Mockito.verify(database).addCurrencies(Mockito.<Currency>anyList()); // TODO matcher
     }
 
