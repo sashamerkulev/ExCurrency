@@ -1,7 +1,7 @@
 
 # Exchange Currency Calculator Application
 
-This test application which has the following restrictions: don't use any libraries except android.support and simple-xml.
+This test application which has the following restrictions: Java and don't use any libraries except android.support and simple-xml.
 
 It takes currencies from http://www.cbr.ru/scripts/XML_daily.asp
 
